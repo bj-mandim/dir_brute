@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>DirBrute Web</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Scanner de Diretórios</h1>
+    <form action="/scan" method="POST">
+        <label for="url">URL alvo:</label>
+        <input type="text" name="url" id="url" required>
+        <button type="submit">Iniciar Scan</button>
+    </form>
+</body>
+</html>
