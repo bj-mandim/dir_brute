@@ -1,8 +1,12 @@
+import os
 from flask import Flask, render_template, request
 import requests
 
-
-app = Flask(__name__)
+# Força o Flask a reconhecer os diretórios corretos no ambiente Serverless do Vercel
+base_dir = os.path.dirname(os.path.abspath(__file__))
+app = Flask(__name__, 
+            static_folder=os.path.join(base_dir, 'static'),
+            template_folder=os.path.join(base_dir, 'templates'))
 
 @app.route("/")
 def home():
