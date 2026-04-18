@@ -2,15 +2,246 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>DirBrute Web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DirBrute Web — Scanner de Diretórios</title>
+    <meta name="description" content="Ferramenta de reconhecimento de infraestrutura web. Escaneamento de diretórios ocultos com interface intuitiva.">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
 </head>
 <body>
-    <h1>Scanner de Diretórios</h1>
-    <form action="/scan" method="POST">
-        <label for="url">URL alvo:</label>
-        <input type="text" name="url" id="url" required>
-        <button type="submit">Iniciar Scan</button>
-    </form>
+
+    <!-- Ambient Background Orbs -->
+    <div class="ambient-orb ambient-orb--green" aria-hidden="true"></div>
+    <div class="ambient-orb ambient-orb--blue" aria-hidden="true"></div>
+
+    <!-- ====== HEADER ====== -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">Dir<span>Brute</span> Web</span>
+            </a>
+            <div class="header-badge">
+                <span class="dot"></span>
+                Offensive Security Tool
+            </div>
+        </div>
+    </header>
+
+    <!-- ====== HERO SECTION ====== -->
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <h1 class="hero-title">
+                    Web Directory<br><span class="gradient-text">Scanner</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Descubra diretórios e arquivos ocultos em aplicações web.
+                    Insira a URL alvo e inicie o reconhecimento de infraestrutura.
+                </p>
+
+                <!-- Scan Card -->
+                <div class="scan-card glass" id="scanCard">
+                    <form action="/scan" method="POST" class="scan-form" id="scanForm">
+                        <div class="input-group">
+                            <label class="input-label" for="url">URL Alvo</label>
+                            <div class="input-wrapper" id="inputWrapper">
+                                <div class="input-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="2" y1="12" x2="22" y2="12"/>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                    </svg>
+                                </div>
+                                <input type="text" name="url" id="url" required
+                                       placeholder="https://exemplo.com"
+                                       autocomplete="url"
+                                       spellcheck="false">
+                            </div>
+                        </div>
+                        <button type="submit" class="scan-btn" id="scanBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            Iniciar Scan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== HOW IT WORKS ====== -->
+        <hr class="section-divider">
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Como Funciona</div>
+                    <h2 class="section-title">Três passos para o reconhecimento</h2>
+                </div>
+                <div class="steps-grid">
+                    <!-- Step 1 -->
+                    <div class="step-card glass">
+                        <span class="step-number">01</span>
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                        </div>
+                        <h3 class="step-title">Defina o Alvo</h3>
+                        <p class="step-desc">
+                            Insira a URL do site que deseja auditar. A ferramenta valida o formato e prepara o escaneamento automaticamente.
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step-card glass">
+                        <span class="step-number">02</span>
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            </svg>
+                        </div>
+                        <h3 class="step-title">Escaneamento Inteligente</h3>
+                        <p class="step-desc">
+                            O DirBrute varre centenas de caminhos usando uma wordlist otimizada para encontrar diretórios e arquivos ocultos.
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="step-card glass">
+                        <span class="step-number">03</span>
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+                            </svg>
+                        </div>
+                        <h3 class="step-title">Analise os Resultados</h3>
+                        <p class="step-desc">
+                            Receba um relatório com códigos de status HTTP, identificando páginas administrativas, APIs expostas e recursos sensíveis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== ABOUT / INITIATIVE ====== -->
+        <hr class="section-divider">
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">A Iniciativa</div>
+                    <h2 class="section-title">Segurança com inteligência</h2>
+                </div>
+                <div class="about-grid">
+                    <!-- Recon Card -->
+                    <div class="about-card glass">
+                        <div class="about-icon about-icon--recon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="about-title">Reconhecimento de Infraestrutura</h3>
+                        <p class="about-desc">
+                            Projetada para facilitar a fase de reconhecimento em auditorias de segurança. Uma interface intuitiva que remove a barreira do terminal, permitindo análises rápidas de infraestrutura web sem sacrificar a profundidade técnica.
+                        </p>
+                    </div>
+
+                    <!-- Security Card -->
+                    <div class="about-card glass">
+                        <div class="about-icon about-icon--security">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <h3 class="about-title">Offensive Security</h3>
+                        <p class="about-desc">
+                            Construída sob a ótica de Segurança Ofensiva, unindo a robustez do Python/Flask com uma interface moderna e acessível. Ideal para profissionais e estudantes que necessitam de agilidade em testes de penetração e reconhecimento web.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== DISCLAIMER ====== -->
+        <div class="container disclaimer">
+            <div class="disclaimer-inner">
+                <div class="disclaimer-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                </div>
+                <p class="disclaimer-text">
+                    <strong>Aviso Legal:</strong> Esta ferramenta é fornecida exclusivamente para uso educacional e testes em sistemas que você possui autorização explícita para testar. O uso indevido contra sistemas sem permissão é ilegal e antiético.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="site-footer">
+        <div class="container">
+            <p class="footer-text">
+                Desenvolvido com <span class="footer-heart">♥</span> por
+                <a href="mailto:beatrizjuliomandim@gmail.com">Beatriz Mandim</a>
+                &middot; DirBrute Web © 2026
+            </p>
+        </div>
+    </footer>
+
+    <!-- ====== SCAN OVERLAY ====== -->
+    <div class="scan-overlay" id="scanOverlay" aria-hidden="true">
+        <div class="overlay-content">
+            <div class="radar">
+                <div class="radar-ring"></div>
+                <div class="radar-ring"></div>
+                <div class="radar-ring"></div>
+                <div class="radar-sweep"></div>
+                <div class="radar-center"></div>
+            </div>
+            <h2 class="overlay-title">Escaneando Alvo...</h2>
+            <p class="overlay-url" id="overlayUrl"></p>
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== SCRIPTS ====== -->
+    <script>
+        (() => {
+            const form = document.getElementById('scanForm');
+            const urlInput = document.getElementById('url');
+            const inputWrapper = document.getElementById('inputWrapper');
+            const overlay = document.getElementById('scanOverlay');
+            const overlayUrl = document.getElementById('overlayUrl');
+
+            // Real-time URL validation
+            urlInput.addEventListener('input', () => {
+                const v = urlInput.value.trim();
+                if (!v) {
+                    inputWrapper.classList.remove('valid', 'invalid');
+                    return;
+                }
+                const valid = /^(https?:\/\/)?[\w\-]+(\.[\w\-]+)+/.test(v);
+                inputWrapper.classList.toggle('valid', valid);
+                inputWrapper.classList.toggle('invalid', !valid);
+            });
+
+            // Show scanning overlay on submit
+            form.addEventListener('submit', () => {
+                const url = urlInput.value.trim();
+                overlayUrl.textContent = url.startsWith('http') ? url : 'http://' + url;
+                overlay.classList.add('active');
+                overlay.setAttribute('aria-hidden', 'false');
+            });
+        })();
+    </script>
 </body>
 </html>

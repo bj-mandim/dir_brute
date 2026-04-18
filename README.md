@@ -1,80 +1,102 @@
-# DirBrute Web
+<div align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3">
+</div>
 
-# 🔎 DirBrute Web
+<br>
 
-DirBrute Web é uma ferramenta simples e intuitiva, feita com **Python + Flask**, que permite realizar **força bruta de diretórios** em um site alvo diretamente pelo navegador.  
-Você informa uma URL, e o sistema varre caminhos com base em uma wordlist para encontrar páginas ou pastas ocultas (como `/admin`, `/login`, `/api`, etc).
-
----
-
-## 🚀 Funcionalidades
-
-- Interface web com HTML + CSS
-- Scanner de diretórios baseado em wordlist
-- Integração com o módulo `requests`
-- Retorno dos status HTTP encontrados
-- Detecção de páginas válidas diferentes de 404
-- Totalmente personalizável
+<div align="center">
+  <h1>🛡️ DirBrute Web</h1>
+  <p><strong>Laboratório de Auditoria Web: Reconhecimento de Infraestrutura e Diretórios Ocultos</strong></p>
+</div>
 
 ---
 
-## 🧰 Requisitos
+## 🎯 O Propósito 
 
-Antes de começar, instale:
+O **DirBrute Web** nasceu de uma necessidade clara: facilitar a fase de *Reconhecimento* em auditorias de segurança e testes de intrusão, unindo o poder e a flexibilidade das ferramentas de linha de comando (como DirBuster, ffuf e gobuster) com a usabilidade e agilidade de uma interface web moderna e intuitiva. 
 
-- Python 3.8+
-- Pip (gerenciador de pacotes Python)
+Sob a ótica de **Offensive Security**, desenvolvemos este ambiente para remover barreiras técnicas imediatas — não é preciso decorar flags no terminal para realizar uma varredura rápida e descobrir ativos expostos em uma aplicação, como painéis administrativos (`/admin`), endpoints de API (`/api/v1`), arquivos de configuração vazados (`/wp-config.php.bak`) ou outras pastas ocultas.
+
+## ⚙️ Tecnologias Utilizadas
+
+A arquitetura do projeto foi pensada para ser leve, rodando de forma standalone com dependências mínimas, mas apresentando um visual "Premium Cybersecurity Mode" via Glassmorphism:
+
+*   **Backend & Lógica**: `Python 3` + `Flask`
+*   **Requisições HTTP**: Biblioteca `requests` (para lidar com timeouts, status codes e retentativas)
+*   **Frontend**: `HTML5`, `Vanilla JavaScript` e um `CSS3` altamente customizado.
+*   **Design**: Dark Mode / Cyber Tema (Acentos neon verde e azul, UI responsiva com *Glassmorphism*, tabelas stream-ready simuladas e console em tempo real).
+*   **Animações**: Feedback visual contínuo através de animações CSS Keyframes, SVG radar e loading dots nativos.
 
 ---
 
-## 📦 Instalação
+## 🚀 Como Funciona?
 
-1. **Clone ou baixe o projeto**:
+O processo de exploração ocorre em três etapas fundamentais:
+
+1.  **Definição do Alvo**: Através do dashboard central, você insere a URL (ex: `https://site.com`). A ferramenta realiza validações regex visuais em tempo real.
+2.  **Ataque Baseado em Dicionário (Wordlist)**: O backend lê o arquivo `wordlists.txt` linha por linha, iterando sobre dezenas (ou milhares) de caminhos prováveis, disparando requisições *GET* para cada caminho construído (`url/palavra`).
+3.  **Resultados Qualificados**: O fluxo finaliza renderizando todos os status codes distintos de `404 (Not Found)`. Códigos de sucesso (`200`), redirecionamentos (`301`, `302`), erros de autorização (`401`, `403`) e falhas internas do alvo (`500`) são exibidos em uma dashboard de análise equipada com *badges* semânticos e console dinâmico.
+
+---
+
+## 🖥️ Como rodar na sua máquina local
+
+Para configurar o ambiente e começar a utilizar a ferramenta na sua máquina, siga os passos abaixo:
+
+### Pré-requisitos
+*   **Python 3.8** ou superior instalado e configurado no PATH.
+
+### Passos para Instalação e Execução
+
+1. **Clone o repositório:**
    ```bash
    git clone https://github.com/seu-usuario/dirbrute-web.git
    cd dirbrute-web
+   ```
 
-2. Crie um ambiente virtual (opcional, mas recomendado):
-  python -m venv venv
-  venv\Scripts\activate  # Windows
-  source venv/bin/activate  # Linux/macOS
+2. **(Opcional) Crie e ative um ambiente virtual:**
+   Isto é altamente recomendado para não poluir o Python global da sua máquina.
+   * **No Windows:**
+     ```powershell
+     python -m venv venv
+     venv\Scripts\activate
+     ```
+   * **No Linux / macOS:**
+     ```bash
+     python3 -m venv venv
+     source venv/bin/activate
+     ```
 
-3. Instale as dependências (no bash):
-  pip install flask requests
+3. **Instale as dependências:**
+   Com o ambiente ativado (ou não, caso tenha pulado o passo anterior), rode:
+   ```bash
+   pip install flask requests
+   ```
 
-🗂️ **Estrutura do Projeto**
+4. **Inicie o Servidor:**
+   ```bash
+   python app.py
+   ```
+   *O console indicará que o Flask está rodando em `http://127.0.0.1:5000` (ou localhost).*
 
-  dirbrute-web/
-      │
-      ├── app.py                    # Código principal em Python (Flask)
-      ├── wordlists.txt             # Wordlist com caminhos a testar
-      ├── templates/
-      │   ├── index.html            # Página inicial (formulário)
-      │   └── resultado.html        # Página que mostra os resultados
-      ├── static/
-      │   └── style.css             # Estilos CSS para as páginas
-      └── README.md                 # Com as intruções de funcionalidade
+5. **Acesse e Use:**
+   * Abra seu navegador preferido e acesse `http://localhost:5000`.
+   * Insira a URL do alvo que deseja testar na tela principal.
+   * *(Opcional): Se quiser testar rotas mais agressivas, adicione suas próprias palavras ao arquivo `wordlists.txt` que fica na raiz do projeto antes de iniciar o scan.*
 
-🛠️ **Como Usar**
-  1. Certifique-se de que está na pasta correta.
+---
 
-  2. Execute o servidor Flask:
-    python app.py
-  
-  3. Acesse no navegador:
-    http://localhost:5000
-    
-  4. No campo "URL alvo", digite a URL do site que deseja escanear, por exemplo:
-    https://exemplo.com
-  
-  5. Clique em "Iniciar Scan".
-    O sistema vai varrer os caminhos definidos no arquivo wordlists.txt e mostrar quais retornam códigos HTTP válidos (exceto 404).
+## ⚠️ Aviso Legal e Responsabilidade
 
-  ⚠️⚠️ ***Aviso Legal*** ⚠️⚠️
-    *Este projeto é fornecido apenas para uso educacional e testes em sistemas autorizados.
-     Nunca use essa ferramenta contra sistemas que você não tem permissão para testar.*
+O **DirBrute Web** é fornecido rigorosamente para **USO EDUCACIONAL**, pesquisas de segurança da informação e testes em sistemas corporativos que você possui **autorização explícita** para auditar (como em programas de *Bug Bounty* verificados ou testes de penetração autorizados em contrato). 
 
-📌 **Autora**
-Desenvolvido por **Beatriz Mandim**
-Contato: [beatrizjuliomandim@gmail.com]
+> **O uso indevido contra alvos não autorizados ou redes públicas governamentais/privadas que não lhe pertencem é ilegal, imoral e não possui correlação com a autora do projeto.**
 
+<br>
+
+<div align="center">
+  <sub>Desenvolvido com curiosidade e ♥ por <b>Beatriz Mandim</b> &middot; Contato: <a href="mailto:beatrizjuliomandim@gmail.com">beatrizjuliomandim@gmail.com</a></sub>
+</div>
